@@ -7,7 +7,7 @@ const cors = require('cors'); // Authorized resource sharing with external third
 const path = require('path'); // Path module provides utilities for working with file and directory paths
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const billboard = require('./routes/billboardAPI');
 const sessions = require('./routes/sessionsAPI');
 const users = require('./routes/usersAPI');
