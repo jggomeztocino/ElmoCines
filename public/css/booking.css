@@ -63,3 +63,17 @@ label{
     border-top: 1px solid white;
     width: 85%;
 }
+
+@media (max-width: 767px) {
+    .informacionContainer{
+        order: 1;
+    }
+    .resumenContainer{
+        order: 2;
+    }
+
+    .confirmarContainer{
+        order: 3;
+    }
+
+}

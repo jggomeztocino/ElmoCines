@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const { movie, sesion, butacas } = obtenerParametrosURL();
     let butacasArray = butacas ? butacas.split(',') : [];
 
+    // Si se han pasado los parámetros necesarios, se procede a cargar la información de la película y la sesión
     if (movie && sesion && butacas) {
         const fecha = formatearFecha(sesion);
         const hora = formatearHora(sesion);
@@ -9,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarInfoSesion(fecha, hora, butacasArray);
         cargarInformacionPelicula(movie);
 
+        // Verificar la disponibilidad de las butacas seleccionadas
         verificarButacasDisponibles(movie, sesion, butacasArray)
             .then(disponibles => {
                 if (disponibles) {
@@ -21,9 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => mensajeError('Ocurrió un error al verificar la disponibilidad de las butacas.', error));
 
+        // Evento para el botón de reserva
         document.querySelector('.btn').addEventListener('click', (e) => {
             e.preventDefault();
-            if (validarCorreo() && validarTelefono() && validarNombre()) {
+            if (validarCorreo() && validarTelefono() && validarNombre()) { // Si los campos de texto son válidos
+                // Se actualiza la información del usuario
                 let correo = document.querySelector('#correo').value;
                 let nombreCompleto = document.querySelector('#nombre').value;
                 let telefono = document.querySelector('#telefono').value;
@@ -42,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let entradasAdultos = butacasArray.length - document.querySelector('#menoresDesplegable').value;
                 let entradasMenores = parseInt(document.querySelector('#menoresDesplegable').value);
 
+                // Verificar de nuevo la disponibilidad de las butacas antes de realizar la reserva
                 verificarButacasDisponibles(movie, sesion, butacas.split(','))
                     .then(disponibles => {
                         if (disponibles) {
@@ -62,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Listeners para comprobar la validez de los campos de texto
         document.querySelector('#nombre').addEventListener('input', actualizarInfo);
         document.querySelector('#correo').addEventListener('input', actualizarInfo);
         document.querySelector('#telefono').addEventListener('input', actualizarInfo);
@@ -70,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Funciones auxiliares
 function actualizarUsuario(correo, nombreCompleto, telefono, reservaId, butacasArray, menusSeleccionados, entradasAdultos, entradasMenores) {
     return fetch(`/users/${correo}`)
         .then(response => {
@@ -116,6 +123,7 @@ function actualizarUsuario(correo, nombreCompleto, telefono, reservaId, butacasA
         });
 }
 
+// Actualiza la sesión con las butacas ocupadas y el correo del usuario
 function actualizarSesion(movie, sesion, butacasArray, correo) {
     return fetch(`/sessions/${movie}/${sesion}`)
         .then(response => response.json())
@@ -140,6 +148,7 @@ function actualizarSesion(movie, sesion, butacasArray, correo) {
         });
 }
 
+// Obtiene los parámetros de la URL
 function obtenerParametrosURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return {
@@ -149,22 +158,26 @@ function obtenerParametrosURL() {
     };
 }
 
+// Formatea la fecha y la hora de la sesión
 function formatearFecha(sesion) {
     const fecha = sesion.split('-')[0];
     return `${fecha.substring(0, 4)}-${fecha.substring(4, 6)}-${fecha.substring(6, 8)}`;
 }
 
+// Formatea la hora de la sesión
 function formatearHora(sesion) {
     const hora = sesion.split('-')[1];
     return `${hora.substring(0, 2)}:${hora.substring(2, 4)}`;
 }
 
+// Actualiza la información de la sesión en la página
 function actualizarInfoSesion(fecha, hora, butacasArray) {
     document.querySelector('#fecha').textContent = fecha;
     document.querySelector('#sesion').textContent = hora;
     document.querySelector('#butacas').textContent = '[' + butacasArray.length + '] ' + butacasArray.join(', ');
 }
 
+// Carga la información de la película en la página
 function cargarInformacionPelicula(movie) {
     fetch(`/billboard/${movie}`)
         .then(response => response.json())
@@ -174,6 +187,7 @@ function cargarInformacionPelicula(movie) {
         .catch(error => mensajeError('Error al cargar la información de la sesión', error));
 }
 
+// Verifica la disponibilidad de las butacas seleccionadas
 function verificarButacasDisponibles(movie, sesion, butacasArray) {
     return fetch(`/sessions/${movie}/${sesion}`)
         .then(response => response.json())
@@ -184,11 +198,13 @@ function verificarButacasDisponibles(movie, sesion, butacasArray) {
         });
 }
 
+// Muestra un mensaje de error en la página
 function mensajeError(msj, error) {
     console.error(error);
     document.querySelector('.containerbody').innerHTML = `<div class="row d-flex justify-content-center align-items-center h-100 text-center"><h1>${msj.replace('\n', '<br>')}</h1></div>`;
 }
 
+// Funciones para la reserva
 function generarDesplegableMenores(numeroButacas) {
     const contenedor = document.querySelector('.field.age');
     let select = document.createElement('select');
@@ -207,6 +223,7 @@ function generarDesplegableMenores(numeroButacas) {
     actualizarResumen();
 }
 
+// Genera los desplegables de menús para cada butaca
 function generarDesplegablesMenus(numeroButacas) {
     const form = document.querySelector('.datos-compra');
     for (let i = 1; i <= numeroButacas; i++) {
@@ -234,6 +251,7 @@ function generarDesplegablesMenus(numeroButacas) {
     actualizarResumen();
 }
 
+// Actualiza el resumen de la compra
 function actualizarResumen() {
     const numeroButacas = document.querySelector('#butacas').textContent.split(']')[0].replace('[', '');
     const numeroMenores = document.querySelector('#menoresDesplegable') ? document.querySelector('#menoresDesplegable').value : 0;
@@ -261,6 +279,7 @@ function actualizarResumen() {
     document.querySelector('.resumenCol').innerHTML = resumenHTML;
 }
 
+// Actualiza la información del usuario
 function actualizarInfo(){
     let informacion = '';
     if(validarNombre()){
@@ -275,6 +294,7 @@ function actualizarInfo(){
     document.querySelector('.infoCol').innerHTML = informacion;
 }
 
+// Validación de los campos de texto
 function mostrarErrorValidacion(selector, mensaje) {
     let elemento = document.querySelector(selector);
     let error = document.createElement('div');
@@ -286,6 +306,7 @@ function mostrarErrorValidacion(selector, mensaje) {
     }
 }
 
+// Elimina el mensaje de error de validación
 function eliminarErrorValidacion(selector) {
     let elemento = document.querySelector(selector);
     // Usar nextElementSibling en lugar de nextSibling
@@ -294,11 +315,11 @@ function eliminarErrorValidacion(selector) {
     }
 }
 
-
+// Validación de los campos de texto
 function validarNombre() {
     let nombre = document.querySelector('#nombre').value;
     if (!nombre.match(/^[A-Z][a-z]+\s[A-Z][a-z]+$/)) {
-        mostrarErrorValidacion('#nombre', 'El nombre debe contener al menos un nombre y un apellido, ambos empezando por mayúscula y sin números.');
+        mostrarErrorValidacion('#nombre', 'El nombre debe contener, exactamente, un nombre y un apellido, ambos empezando por mayúscula, sin números y sin tildes.');
         return false;
     } else {
         eliminarErrorValidacion('#nombre');
@@ -306,10 +327,11 @@ function validarNombre() {
     }
 }
 
+// Validación de los campos de texto
 function validarCorreo() {
     let email = document.querySelector('#correo').value;
     if (!email.match(/^[^@\s]+@[^@\s]+\.(com|es)(\/\S*)?$/)) {
-        mostrarErrorValidacion('#correo', 'El correo debe tener el formato correo@dominio.com/es/...');
+        mostrarErrorValidacion('#correo', 'El correo debe tener el formato correo@dominio.com/es');
         return false;
     } else {
         eliminarErrorValidacion('#correo');
@@ -317,6 +339,7 @@ function validarCorreo() {
     }
 }
 
+// Validación de los campos de texto
 function validarTelefono() {
     let telefono = document.querySelector('#telefono').value;
     if (!telefono.match(/^[6789]\d{8}$/)) {

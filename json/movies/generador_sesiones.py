@@ -64,7 +64,7 @@ def generar_sesiones(fecha_inicio, fecha_fin, max_sala, total_butacas, sesiones_
 
 
 # Datos para la generación de sesiones
-id_peliculas = ['wicked', 'argylle', 'wonka', 'dune', 'dune2', 'kung-fu-panda-4', 'one-love', 'madame-web']
+id_peliculas = ['wicked', 'argylle', 'wonka', 'dune', 'dune2', 'kung_fu_panda_4', 'one_love', 'madame_web']
 fecha_inicio = datetime(2024, 4, 1)
 fecha_fin = datetime(2024, 4, 30)
 max_sala = 15

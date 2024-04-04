@@ -111,7 +111,7 @@
     "trailer": "https://www.youtube-nocookie.com/embed/Way9Dexny3w?si=43_adQN2ZFaTawz6"
   },
   {
-    "_id": "madame-web",
+    "_id": "madame_web",
     "title": "Madame Web",
     "cover_url": "https://i.imgur.com/AXD5t8Z.png",
     "directors": "S. J. Clarkson",
@@ -130,7 +130,7 @@
     "trailer": "https://www.youtube-nocookie.com/embed/s_76M4c4LTo?si=m6w7eGTxBH1i_yEm"
   },
   {
-    "_id": "one-love",
+    "_id": "one_love",
     "title": "One Love",
     "cover_url": "https://i.imgur.com/vzPsQ5C.png",
     "directors": "Reinaldo Marcus Green",
@@ -154,7 +154,7 @@
     "trailer": "https://www.youtube-nocookie.com/embed/ajw425Kuvtw?si=Ordk2lArJ359PQpF"
   },
   {
-    "_id": "kung-fu-panda-4",
+    "_id": "kung_fu_panda_4",
     "title": "Kung Fu Panda 4",
     "cover_url": "https://i.imgur.com/gYIVwq7.png",
     "directors": "Mike Mitchell",

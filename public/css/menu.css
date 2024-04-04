@@ -39,3 +39,12 @@ main {
     width: 75%;
     height: auto;
 }
+
+@media (max-width: 767px) {
+    .imagen{
+        order: 1;
+    }
+    .texto{
+        order: 2;
+    }
+}

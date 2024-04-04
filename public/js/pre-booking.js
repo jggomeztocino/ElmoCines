@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const movie = urlParams.get('movie');
+    let fecha;
     let sesion;
     const today = new Date().toISOString().split('T')[0];
     let butacasSeleccionadas = [];
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
-                sesion = sesiones[0]._id;
+                sesion = fechas[0].split('-').join('') + '-' + sesiones.find(sesion => sesion.fecha === fechas[0]).hora.split(':').join('');
 
                 const formulario = document.querySelector('.formulario');
                 formulario.innerHTML = ''; // Limpiamos el formulario
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 selectorFecha.addEventListener('change', (event) => {
                     const fechaSeleccionada = event.target.value;
+                    sesion = fechaSeleccionada.split('-').join('') + '-' + sesiones.find(sesion => sesion.fecha === fechaSeleccionada).hora.split(':').join('');
                     loadSessionTimes(movie, fechaSeleccionada, sesiones);
                 });
 
