@@ -94,11 +94,12 @@ function reservaHTML(updateData) {
         <div style="width: 100%; display: flex; flex-wrap: wrap; align-items: flex-start; background-color: #f4f4f4; padding: 20px;">
             <div style="flex: 1; min-width: 50%; padding: 20px;">
                 <h1><strong>¡Hola ${updateData.name}!</strong></h1>
-                <p>Has realizado una reserva para la película: ${movie}</p>
+                <p>Has realizado una reserva
+                 para la película: <strong>${movie}</strong></p>
                 <p><strong>Fecha:</strong> ${date}, <strong>Sesión:</strong> ${time}</p>
                 <p><strong>Menús seleccionados:</strong> ${menus.join(', ')}</p>
                 <p><strong>Total:</strong> ${booking.total} €</p>
-                <h4><a href="https://localhost:3000/html/confirmed.html">Confirma tu compra aquí</a></h4>
+                <h4><a href="https://worthy-initially-rhino.ngrok-free.app/html/confirmed.html">Confirma tu compra aquí</a></h4>
             </div>
             <div style="flex: 1; min-width: 50%; padding: 20px; text-align: center;">
                 <img src="https://i.imgur.com/6XcVR6W.png" alt="Elmo Love" style="max-width: 100%; height: auto;">
